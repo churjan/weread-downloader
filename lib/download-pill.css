@@ -1,0 +1,85 @@
+:host {
+  color-scheme: light dark;
+  --surface: #fff;
+  --ink: #232936;
+  --muted: #646c79;
+  --border: #dedfe2;
+  --track: #e7e9eb;
+  --blue: #2682fb;
+  --success: #15803d;
+  --failure: oklch(0.577 0.245 27.325);
+  --warning: #b45309;
+  --hover: #f2f4f6;
+  font: 14px/1.35 system-ui, "Microsoft YaHei", sans-serif;
+}
+*, *::before { box-sizing: border-box }
+[hidden] { display: none !important }
+button { font: inherit; cursor: pointer; color: inherit; border: 0; padding: 0; background: transparent }
+button:focus-visible { outline: 2px solid var(--blue); outline-offset: 2px }
+svg { display: block; width: 16px; height: 16px }
+.start, .pill {
+  color: var(--ink); background: var(--surface); border: 1px solid var(--border);
+  border-radius: 999px; box-shadow: 0 1px 3px #18223a0a;
+}
+.start { display: flex; align-items: center; gap: 8px; padding: 9px 16px; font-weight: 500 }
+.start:hover, .close:hover, .retry:hover { background: var(--hover) }
+.pill {
+  display: flex; align-items: center; gap: 10px;
+  width: min(300px, calc(100vw - 40px)); min-height: 48px; padding: 6px 10px;
+}
+.symbol {
+  position: relative; flex: 0 0 32px; height: 32px; display: grid; place-items: center;
+  color: var(--muted); border-radius: 50%;
+}
+.pill:is([data-phase="running"], [data-phase="cancelled"]) .symbol {
+  background: conic-gradient(var(--blue) var(--fill, 0%), var(--track) 0);
+}
+.pill:is([data-phase="running"], [data-phase="cancelled"]) .symbol::before {
+  content: ""; position: absolute; inset: 2px; border-radius: inherit; background: var(--surface);
+}
+.symbol svg { position: relative }
+.pill:is([data-phase="done"], [data-phase="failed"], [data-phase="retry"]) .symbol svg { width: 23px; height: 23px }
+output { flex: 1; min-width: 0; display: block }
+.headline { display: flex; align-items: baseline; gap: 10px; white-space: nowrap }
+strong { font-size: 14px; font-weight: 500; overflow: hidden; text-overflow: ellipsis }
+.count { font-size: 14px; font-variant-numeric: tabular-nums }
+.detail { display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--muted); font-size: 12px; line-height: 17px }
+.pill:is([data-phase="failed"], [data-phase="retry"]) { border-radius: 24px }
+.pill:is([data-phase="failed"], [data-phase="retry"]) .detail { white-space: normal; overflow-wrap: anywhere }
+.close {
+  position: relative; flex: 0 0 28px; height: 28px; border-radius: 50%; display: grid;
+  place-items: center; color: var(--muted); margin-left: 3px;
+}
+.close svg { width: 20px; height: 20px }
+.retry { flex: none; padding: 4px; border-radius: 5px; color: var(--blue); font-size: 12px }
+[data-phase="done"] .symbol { color: var(--success) }
+[data-phase="failed"] .symbol, [data-phase="retry"] .symbol { color: var(--failure) }
+.pill[data-phase="done"].warning .symbol { color: var(--warning) }
+.inspect {
+  display: block; max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  font-size: 12px; line-height: 17px; color: var(--warning); text-decoration: underline; text-underline-offset: 2px;
+}
+#image-details {
+  position: absolute; right: 0; bottom: calc(100% + 8px); display: flex; flex-direction: column;
+  width: min(360px, calc(100vw - 40px)); max-height: min(430px, calc(100dvh - 96px));
+  background: var(--surface); color: var(--ink); border: 1px solid var(--border);
+  border-radius: 14px; box-shadow: 0 4px 18px #18223a1a; overflow: hidden;
+}
+#image-details header, #image-details footer, .issue-actions {
+  display: flex; align-items: center; justify-content: space-between; gap: 10px;
+}
+#image-details header, #image-details footer { padding: 10px 14px }
+#image-details ul { margin: 0; padding: 0 14px; list-style: none; overflow-y: auto; overscroll-behavior: contain }
+#image-details li { display: grid; gap: 4px; padding: 10px 0; border-top: 1px solid var(--border); overflow-wrap: anywhere }
+#image-details b { font-weight: 600 }
+#image-details li, #image-details footer, #image-details button { font-size: 12px }
+#image-details .source, #image-details footer span { color: var(--muted) }
+.issue-actions .reason { color: var(--warning) }
+#image-details button { flex: none; padding: 4px; color: var(--blue); border-radius: 4px }
+#image-details button:hover:enabled { background: var(--hover) }
+#image-details button:disabled { color: var(--muted); cursor: default }
+#image-details footer { border-top: 1px solid var(--border) }
+@media (prefers-color-scheme: dark) {
+  :host { --surface: #282a2e; --ink: #eef0f3; --muted: #b1b7c0; --border: #484b51; --track: #454a51; --blue: #70acff; --hover: #383c42 }
+  :host { --success: #86efac; --failure: oklch(0.704 0.191 22.216); --warning: #fcd34d }
+}

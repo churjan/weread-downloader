@@ -1,0 +1,26 @@
+{
+  "name": "weread-downloader",
+  "version": "0.1.0",
+  "private": true,
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "dev": "wxt",
+    "build": "wxt build",
+    "check": "wxt prepare && tsc --noEmit",
+    "test": "tsx --test tests/*.test.ts",
+    "test:browser": "node scripts/test-browser.mjs"
+  },
+  "dependencies": {
+    "bootstrap-icons": "^1.13.2",
+    "fflate": "^0.8.3"
+  },
+  "devDependencies": {
+    "@types/chrome": "^0.1.0",
+    "@types/node": "^22.20.5",
+    "tsx": "^4.20.0",
+    "typescript": "~5.9.3",
+    "vite": "^8.3.6",
+    "wxt": "0.21.5"
+  }
+}
